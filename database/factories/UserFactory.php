@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Company;
+use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -26,6 +27,12 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
+            'company_id' => function () {
+                return Company::query()->inRandomOrder()->first()->id;
+            },
+            'role_id' => function () {
+                return Role::query()->inRandomOrder()->first()->id;
+            },
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
@@ -72,6 +79,8 @@ class UserFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
+                'company_id' => 1,
+                'role_id' => 1,
                 'email' => 'admin@prum.jp',
             ];
         });
